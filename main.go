@@ -59,6 +59,7 @@ func main() {
 
 	app.Commands = []cli.Command{
 		cmd.GrootVersion,
+		cmd.SubmitAction,
 	}
 
 	sort.Sort(cli.FlagsByName(app.Flags))

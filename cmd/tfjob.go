@@ -1,8 +1,6 @@
 package cmd
 
-import (
-	"github.com/urfave/cli"
-)
+import "github.com/urfave/cli"
 
 type submitTFJob struct {
 	//ps
@@ -40,9 +38,10 @@ type submitTFJob struct {
 	EvaluatorMemory   string
 }
 
-var SubmitAction = cli.Command{
-	Name:  "submit",
-	Usage: "Submit a job",
+var TFJobSubCommand = cli.Command{
+	Name:    "tfjob",
+	Aliases: []string{"tf"},
+	Usage:   "submit a TFjob as training job.",
 	Action: func(c *cli.Context) error {
 		return nil
 	},
