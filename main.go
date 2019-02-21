@@ -8,8 +8,6 @@ import (
 	"github.com/urfave/cli"
 	"github.com/xigang/groot/cmd"
 	"github.com/xigang/groot/pkg/kubernetes"
-	v1 "k8s.io/api/core/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func main() {
@@ -26,15 +24,10 @@ func main() {
 			Value: "/etc/kubernetes/kubeconfig",
 			Usage: "path to a kube config. only required if out-of-cluster",
 		},
-		cli.StringFlag{
-			Name:  "namespace",
-			Value: "default",
-			Usage: "the namespace of the job",
-		},
 	}
 
 	app.Before = func(c *cli.Context) error {
-		kubeconfig, namespace := c.GlobalString("config"), c.GlobalString("namespace")
+		kubeconfig := c.GlobalString("config")
 
 		clientset, err := kubernetes.CreateKubeClient(kubeconfig)
 		if err != nil {
@@ -44,16 +37,6 @@ func main() {
 
 		kubernetes.KubeClient = clientset
 
-		if _, err = kubernetes.KubeClient.CoreV1().Namespaces().Get(namespace, metav1.GetOptions{}); err != nil {
-			newNS := &v1.Namespace{}
-			newNS.Name = namespace
-
-			_, err := kubernetes.KubeClient.CoreV1().Namespaces().Create(newNS)
-			if err != nil {
-				logrus.Errorf("failed to create new namespace in the k8s cluster. reason: %v", err)
-				return err
-			}
-		}
 		return nil
 	}
 
