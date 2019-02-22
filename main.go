@@ -1,13 +1,16 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"sort"
 
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"github.com/xigang/groot/cmd"
-	"github.com/xigang/groot/pkg/kubernetes"
+	"github.com/xigang/groot/pkg/client/clientset/versioned/scheme"
+	"github.com/xigang/groot/pkg/client/clientset/versioned/typed/tensorflow/v1beta2"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
 func main() {
@@ -28,14 +31,23 @@ func main() {
 
 	app.Before = func(c *cli.Context) error {
 		kubeconfig := c.GlobalString("config")
-
-		clientset, err := kubernetes.CreateKubeClient(kubeconfig)
+		kcfg, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
 		if err != nil {
-			logrus.Errorf("failed to create kube client: %v", err)
 			return err
 		}
 
-		kubernetes.KubeClient = clientset
+		KubeflowV1Beta2Client, err := v1beta2.NewForConfig(kcfg)
+		if err != nil {
+			return err
+		}
+
+		TFjob := KubeflowV1Beta2Client.TFJobs("default")
+		result, err := TFjob.Get("tfjob", scheme.ParameterCodec)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println(result)
 
 		return nil
 	}

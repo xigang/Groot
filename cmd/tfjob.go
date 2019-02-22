@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/urfave/cli"
-	"github.com/xigang/groot/pkg/kubernetes"
 )
 
 type TFJob struct {
@@ -131,7 +130,7 @@ var TFJobSubCommand = cli.Command{
 var submitTFJob = func(c *cli.Context) error {
 	tfjob := NewTFJob(c)
 
-	err := TFJob.CreateTFJob()
+	err := tfjob.CreateTFJob()
 	if err != nil {
 		return err
 	}
@@ -140,7 +139,6 @@ var submitTFJob = func(c *cli.Context) error {
 }
 
 func (tf *TFJob) CreateTFJob() error {
-	kubernetes.KubeClient.
 	return nil
 }
 
