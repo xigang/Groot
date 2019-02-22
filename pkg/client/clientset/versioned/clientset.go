@@ -17,8 +17,8 @@
 package versioned
 
 import (
-	kubeflowv1beta1 "github.com/kubeflow/tf-operator/pkg/client/clientset/versioned/typed/tensorflow/v1beta1"
-	kubeflowv1beta2 "github.com/kubeflow/tf-operator/pkg/client/clientset/versioned/typed/tensorflow/v1beta2"
+	kubeflowv1beta1 "github.com/xigang/groot/pkg/client/clientset/versioned/typed/tensorflow/v1beta1"
+	kubeflowv1beta2 "github.com/xigang/groot/pkg/client/clientset/versioned/typed/tensorflow/v1beta2"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"

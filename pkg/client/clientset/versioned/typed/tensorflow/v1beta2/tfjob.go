@@ -17,8 +17,8 @@
 package v1beta2
 
 import (
-	v1beta2 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1beta2"
-	scheme "github.com/kubeflow/tf-operator/pkg/client/clientset/versioned/scheme"
+	v1beta2 "github.com/xigang/groot/pkg/apis/tensorflow/v1beta2"
+	scheme "github.com/xigang/groot/pkg/client/clientset/versioned/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"

@@ -8,8 +8,8 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"github.com/xigang/groot/cmd"
-	"github.com/xigang/groot/pkg/client/clientset/versioned/scheme"
-	"github.com/xigang/groot/pkg/client/clientset/versioned/typed/tensorflow/v1beta2"
+	tfjobclientset "github.com/xigang/groot/pkg/client/clientset/versioned"
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/tools/clientcmd"
 )
 
@@ -36,14 +36,15 @@ func main() {
 			return err
 		}
 
-		KubeflowV1Beta2Client, err := v1beta2.NewForConfig(kcfg)
+		cs, err := tfjobclientset.NewForConfig(kcfg)
 		if err != nil {
 			return err
 		}
 
-		TFjob := KubeflowV1Beta2Client.TFJobs("default")
-		result, err := TFjob.Get("tfjob", scheme.ParameterCodec)
+		TFjob := cs.KubeflowV1beta2().TFJobs("stark-ai")
+		result, err := TFjob.List(v1.ListOptions{})
 		if err != nil {
+			fmt.Println("<<<")
 			return err
 		}
 

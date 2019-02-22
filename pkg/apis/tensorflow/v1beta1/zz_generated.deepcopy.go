@@ -19,7 +19,7 @@
 package v1beta1
 
 import (
-	commonv1beta1 "github.com/kubeflow/tf-operator/pkg/apis/common/v1beta1"
+	commonv1beta1 "github.com/xigang/groot/pkg/apis/common/v1beta1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 

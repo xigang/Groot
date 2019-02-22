@@ -17,7 +17,7 @@
 package fake
 
 import (
-	v1beta2 "github.com/kubeflow/tf-operator/pkg/client/clientset/versioned/typed/tensorflow/v1beta2"
+	v1beta2 "github.com/xigang/groot/pkg/client/clientset/versioned/typed/tensorflow/v1beta2"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )
