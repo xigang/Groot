@@ -41,10 +41,9 @@ func main() {
 			return err
 		}
 
-		TFjob := cs.KubeflowV1beta2().TFJobs("stark-ai")
-		result, err := TFjob.List(v1.ListOptions{})
+		TFjob := cs.KubeflowV1beta2().TFJobs("default")
+		result, err := TFjob.Get("tfjob-20190222", v1.GetOptions{})
 		if err != nil {
-			fmt.Println("<<<")
 			return err
 		}
 
