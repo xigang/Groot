@@ -7,10 +7,11 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/tools/clientcmd"
+
 	"github.com/xigang/groot/cmd"
 	tfjobclientset "github.com/xigang/groot/pkg/client/clientset/versioned"
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/tools/clientcmd"
 )
 
 func main() {
@@ -23,31 +24,35 @@ func main() {
 
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
+			Name:  "master",
+			Value: "http://localhost:8080",
+			Usage: "The address of the Kubernetes API server. Overrides any value in kubeconfig. only required if out-of-cluster.",
+		},
+		cli.StringFlag{
 			Name:  "config",
 			Value: "/etc/kubernetes/kubeconfig",
-			Usage: "path to a kube config. only required if out-of-cluster",
+			Usage: "path to a kube config. only required if out-of-cluster.",
 		},
 	}
 
 	app.Before = func(c *cli.Context) error {
 		kubeconfig := c.GlobalString("config")
-		kcfg, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
+		cfg, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
 		if err != nil {
 			return err
 		}
 
-		cs, err := tfjobclientset.NewForConfig(kcfg)
+		tfJobClient, err := tfjobclientset.NewForConfig(cfg)
 		if err != nil {
 			return err
 		}
 
-		TFjob := cs.KubeflowV1beta2().TFJobs("default")
-		result, err := TFjob.Get("tfjob-20190222", v1.GetOptions{})
+		tfjob, err := tfJobClient.KubeflowV1beta2().TFJobs("default").Get("tfjob-20190222", metav1.GetOptions{})
 		if err != nil {
 			return err
 		}
 
-		fmt.Println(result)
+		fmt.Printf("tfjob resource: %+v", tfjob)
 
 		return nil
 	}

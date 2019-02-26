@@ -19,10 +19,10 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	commonv1beta1 "github.com/xigang/groot/pkg/apis/common/v1beta1"
-	commonv1beta2 "github.com/xigang/groot/pkg/apis/common/v1beta2"
-	tfv1beta1 "github.com/xigang/groot/pkg/apis/tensorflow/v1beta1"
-	tfv1beta2 "github.com/xigang/groot/pkg/apis/tensorflow/v1beta2"
+	commonv1beta1 "github.com/kubeflow/tf-operator/pkg/apis/common/v1beta1"
+	commonv1beta2 "github.com/kubeflow/tf-operator/pkg/apis/common/v1beta2"
+	tfv1beta1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1beta1"
+	tfv1beta2 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1beta2"
 )
 
 // ValidateBetaOneTFJobSpec checks that the v1beta1.TFJobSpec is valid.

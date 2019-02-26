@@ -55,7 +55,6 @@ func init() {
 	// generated functions takes place in the generated files. The separation
 	// makes the code compile even when the generated files are missing.
 	localSchemeBuilder.Register(addKnownTypes)
-	localSchemeBuilder.Register(addDefaultingFuncs)
 }
 
 // Resource takes an unqualified resource and returns a Group-qualified GroupResource.
